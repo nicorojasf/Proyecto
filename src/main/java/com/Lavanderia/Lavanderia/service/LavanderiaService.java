@@ -42,8 +42,8 @@ public class LavanderiaService {
     registro.setCantidadRecibida(cantidadRecibida);
     registro.setEstadoRopa("FINALIZADO");
     registro.setFechaDeRetorno(LocalDateTime.now());
-    lavanderiaRepository.save(registro);
-    return registro;
+    
+    return lavanderiaRepository.save(registro);
     }
 
     // Dentro de registrarEnvio en LavanderiaService
@@ -55,12 +55,12 @@ public class LavanderiaService {
     try {
         // 2. Llamada automática usando el ID del JSON (ej: 47)
         inventarioClient.llamarDescuento(registro.getPrendaId(), cantidadADescontar);
-
         registro.setCantidadEnviada(cantidadADescontar);
     } catch (Exception e) {
         throw new RuntimeException("Error en comunicación con Inventario: " + e.getMessage());
     }
     registro.setEstadoRopa("PROCESANDO");
+
     return lavanderiaRepository.save(registro);
     }
 

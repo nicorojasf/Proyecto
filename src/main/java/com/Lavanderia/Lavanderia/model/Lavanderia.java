@@ -30,7 +30,8 @@ public class Lavanderia {
 
     private String estadoRopa;
 
-
+    private String area;
+    
     private LocalDateTime fechaDeSalida;
 
     private LocalDateTime fechaDeRetorno;
