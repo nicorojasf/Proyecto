@@ -15,7 +15,7 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable()) // ESTO ES LO QUE QUITA EL 403
             .authorizeHttpRequests(auth -> auth
-             .requestMatchers("/api/asignaciones/**").permitAll() 
+             .requestMatchers("/api/unidad/**").permitAll() 
              .anyRequest().permitAll()
         );
         return http.build();

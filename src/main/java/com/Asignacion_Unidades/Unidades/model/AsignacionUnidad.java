@@ -11,7 +11,7 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "ASIGNACION UNIDADES")
+@Table(name = "ASIGNACION_UNIDADES")
 @Data
 public class AsignacionUnidad {
 

@@ -33,23 +33,17 @@ public class AsignacionController {
             @RequestParam Integer cantidad, 
             @RequestParam String area) {
         
-        return ResponseEntity.ok(asignacionService.realizarAsignacionInicial(prendaId, cantidad, area));
+        return ResponseEntity.ok(asignacionService.realizarAsignacionInicial( prendaId, cantidad, area));
     }
 
     @PostMapping("/lavar")
     public ResponseEntity<LavanderiaDTO> mandarALavanderia(
             @RequestParam Integer prendaId, 
-            @RequestParam Integer cantidad) {
-        
-        return ResponseEntity.ok(asignacionService.enviarRopaSucia(prendaId, cantidad));
-    }
-
-    @PutMapping("/recibir")
-    public ResponseEntity<AsignacionUnidad> recibirDeLavanderia(
-            @RequestParam Integer idUnidad, 
-            @RequestParam Integer cantidad, 
+            @RequestParam Integer cantidad,
             @RequestParam String area) {
-       return ResponseEntity.ok(asignacionService.recibirRopaLimpia(idUnidad, cantidad, area));
+        
+        return ResponseEntity.ok(asignacionService.enviarRopaSucia(prendaId, cantidad, area));
     }
 
+  
 }
