@@ -6,18 +6,20 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
+
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
-
-   @Bean
-        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .csrf(csrf -> csrf.disable()) // ESTO ES LO QUE QUITA EL 403
-            .authorizeHttpRequests(auth -> auth
-             .requestMatchers("/api/unidad/**").permitAll() 
-             .anyRequest().permitAll()
+public class FeignConfig {
+    
+    @Bean
+public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    http
+        .csrf(csrf -> csrf.disable()) // Desactivamos CSRF
+        .authorizeHttpRequests(auth -> auth
+            // Permitimos que cualquier petición que llegue a este puerto se procese directamente
+            .anyRequest().permitAll() 
         );
-        return http.build();
-    }
+        
+    return http.build();
+}
 }
