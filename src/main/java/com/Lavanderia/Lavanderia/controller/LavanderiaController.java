@@ -39,7 +39,6 @@ public class LavanderiaController {
     public ResponseEntity<Lavanderia> registrarRetorno(
         @PathVariable Integer id, 
         @RequestParam Integer cantidad) {
-    // Llamamos al servicio para procesar el aumento de stock
     Lavanderia actualizado = lavanderiaService.registrarRetorno(id, cantidad);
     return ResponseEntity.ok(actualizado);
 }

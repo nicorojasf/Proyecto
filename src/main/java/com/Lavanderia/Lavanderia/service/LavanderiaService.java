@@ -31,14 +31,11 @@ public class LavanderiaService {
 
 
     public Lavanderia registrarRetorno(Integer id, Integer cantidadRecibida) {
-    // 1. Buscamos el registro de la lavandería (ej: el 21)
     Lavanderia registro = lavanderiaRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Registro de lavandería no encontrado"));
 
-    // 2. Llamada al micro de Inventario para SUMAR stock usando el ID de la prenda guardado
     inventarioClient.llamarAumento(registro.getPrendaId(), cantidadRecibida);
 
-    // 3. Actualizamos datos locales
     registro.setCantidadRecibida(cantidadRecibida);
     registro.setEstadoRopa("FINALIZADO");
     registro.setFechaDeRetorno(LocalDateTime.now());
@@ -46,14 +43,12 @@ public class LavanderiaService {
     return lavanderiaRepository.save(registro);
     }
 
-    // Dentro de registrarEnvio en LavanderiaService
+    
     public Lavanderia registrarEnvio(Lavanderia registro, Integer cantidadADescontar) {
-    // 1. Validar que el ID no sea nulo antes de llamar a Inventario
     if (registro.getPrendaId() == null) {
         throw new RuntimeException("El ID de la prenda es obligatorio para el descuento.");
     }
     try {
-        // 2. Llamada automática usando el ID del JSON (ej: 47)
         inventarioClient.llamarDescuento(registro.getPrendaId(), cantidadADescontar);
         registro.setCantidadEnviada(cantidadADescontar);
     } catch (Exception e) {

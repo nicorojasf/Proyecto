@@ -36,7 +36,6 @@ public class Lavanderia {
 
     private LocalDateTime fechaDeRetorno;
 
-    // Esto asigna la fecha automáticamente al crear el registro
     @PrePersist
     protected void onCreate() {
         fechaDeSalida = LocalDateTime.now();
