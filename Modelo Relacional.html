@@ -1,0 +1,245 @@
+
+<style>
+.wrap{overflow:auto;padding:12px;background:var(--color-background-primary)}
+.cv{position:relative;width:1260px;height:920px}
+.tb{position:absolute;background:#daeaf7;border:1.5px solid #5a8fc4;border-radius:3px;min-width:210px;font-family:Arial,sans-serif;font-size:11px}
+.th{background:#3a6ea8;color:#fff;font-size:12px;font-weight:700;padding:5px 9px;white-space:nowrap;border-radius:2px 2px 0 0}
+.at{color:#1a2a3a;padding:1px 9px 1px 11px;line-height:1.75;white-space:nowrap}
+.at.pk{font-weight:700;color:#0d2d5e}
+.at.pk::before{content:"# ";color:#1a6bbf;font-size:10px}
+.at.fk{color:#1a5a9a}
+.at.fk::before{content:"◇ ";color:#2d7fc1;font-size:10px}
+.sep{border-top:1px solid #7aaed4;margin:3px 0}
+svg.ln{position:absolute;top:0;left:0;width:1260px;height:920px;pointer-events:none;overflow:visible}
+</style>
+<div class="wrap"><div class="cv" id="cv">
+
+<!-- INVENTARIO — centro arriba -->
+<div class="tb" id="inv" style="left:500px;top:30px">
+  <div class="th">Inventario</div>
+  <div class="at pk">id : INTEGER</div>
+  <div class="sep"></div>
+  <div class="at">nombre_prenda : VARCHAR2</div>
+  <div class="at">material : VARCHAR2</div>
+  <div class="at">categoria : VARCHAR2</div>
+  <div class="at">STOCK_ACTUAL : INTEGER</div>
+  <div class="at">stock_bodega : INTEGER</div>
+  <div class="at">stock_minimo : INTEGER</div>
+</div>
+
+<!-- LAVANDERIA — izquierda arriba -->
+<div class="tb" id="lav" style="left:30px;top:30px">
+  <div class="th">Lavanderia</div>
+  <div class="at pk">id : INTEGER</div>
+  <div class="at fk">prendaId : INTEGER</div>
+  <div class="sep"></div>
+  <div class="at">cantidadEnviada : INTEGER</div>
+  <div class="at">cantidadRecibida : INTEGER</div>
+  <div class="at">estadoRopa : VARCHAR2</div>
+  <div class="at">area : VARCHAR2</div>
+  <div class="at">fechaDeSalida : TIMESTAMP</div>
+  <div class="at">fechaDeRetorno : TIMESTAMP</div>
+</div>
+
+<!-- ASIGNACION — izquierda medio -->
+<div class="tb" id="asig" style="left:30px;top:360px">
+  <div class="th">Asignacion_Unidad</div>
+  <div class="at pk">id : INTEGER</div>
+  <div class="at fk">idUnidad : INTEGER</div>
+  <div class="sep"></div>
+  <div class="at">stockUnidad : INTEGER</div>
+  <div class="at">areaAsignada : VARCHAR2</div>
+  <div class="at">estadoUnidad : VARCHAR2</div>
+  <div class="at">fechaAsignacion : TIMESTAMP</div>
+  <div class="at">fechaDevolucion : TIMESTAMP</div>
+</div>
+
+<!-- ORDEN_COMPRA — centro medio -->
+<div class="tb" id="ord" style="left:500px;top:400px">
+  <div class="th">Orden_Compra</div>
+  <div class="at pk">id : NUMBER</div>
+  <div class="at fk">prendaId : NUMBER</div>
+  <div class="at fk">proveedorId : NUMBER</div>
+  <div class="sep"></div>
+  <div class="at">cantidad : INTEGER</div>
+  <div class="at">estado : VARCHAR2</div>
+  <div class="at">fechaPedido : DATE</div>
+</div>
+
+<!-- PROVEEDOR — derecha medio -->
+<div class="tb" id="prov" style="left:960px;top:400px">
+  <div class="th">Proveedor</div>
+  <div class="at pk">id : NUMBER</div>
+  <div class="sep"></div>
+  <div class="at">nombre : VARCHAR2(100)</div>
+  <div class="at">ruc : VARCHAR2(20)</div>
+  <div class="at">telefono : VARCHAR2</div>
+  <div class="at">categoria : VARCHAR2</div>
+</div>
+
+<!-- BAJA_PRENDA — centro abajo -->
+<div class="tb" id="baja" style="left:500px;top:720px">
+  <div class="th">Baja_Prenda</div>
+  <div class="at pk">id : NUMBER</div>
+  <div class="at fk">prendaId : NUMBER</div>
+  <div class="at fk">motivoId : NUMBER</div>
+  <div class="sep"></div>
+  <div class="at">moduloOrigen : VARCHAR2</div>
+  <div class="at">responsableAuditoria : VARCHAR2</div>
+  <div class="at">informeTecnico : VARCHAR2</div>
+  <div class="at">fechaBaja : DATE</div>
+</div>
+
+<!-- MOTIVO_DESCARTE — derecha abajo -->
+<div class="tb" id="mot" style="left:960px;top:720px">
+  <div class="th">Motivo_Descarte</div>
+  <div class="at pk">id : NUMBER</div>
+  <div class="sep"></div>
+  <div class="at">nombreMotivo : VARCHAR2</div>
+  <div class="at">nivelGravedad : VARCHAR2</div>
+</div>
+
+<!-- USUARIO — izquierda abajo -->
+<div class="tb" id="usu" style="left:30px;top:700px">
+  <div class="th">Usuario</div>
+  <div class="at pk">id : NUMBER</div>
+  <div class="sep"></div>
+  <div class="at">username : VARCHAR2</div>
+  <div class="at">password : VARCHAR2</div>
+  <div class="at">NOMBRE_COMPLETO : VARCHAR2</div>
+  <div class="at">rol : VARCHAR2</div>
+</div>
+
+<svg class="ln" id="svgln"></svg>
+</div></div>
+
+<div style="display:flex;gap:22px;flex-wrap:wrap;padding:6px 12px;font-size:11px;color:var(--color-text-secondary);font-family:Arial,sans-serif">
+  <span><b style="color:#0d2d5e">#</b> Clave primaria (PK)</span>
+  <span><b style="color:#2d7fc1">◇</b> Clave foránea (FK)</span>
+  <span>● extremo "1" &nbsp;·&nbsp; punto vacío extremo "N"</span>
+</div>
+
+<script>
+window.addEventListener('load', () => {
+  const svg = document.getElementById('svgln');
+
+  function R(el){return el.offsetLeft+el.offsetWidth}
+  function L(el){return el.offsetLeft}
+  function T(el){return el.offsetTop}
+  function B(el){return el.offsetTop+el.offsetHeight}
+  function MX(el){return el.offsetLeft+el.offsetWidth/2}
+  function MY(el){return el.offsetTop+el.offsetHeight/2}
+
+  function fkY(el,n){
+    const fks=el.querySelectorAll('.at.fk');
+    if(!fks[n]) return MY(el);
+    return el.offsetTop+fks[n].offsetTop+fks[n].offsetHeight/2;
+  }
+  function pkY(el){
+    const pk=el.querySelector('.at.pk');
+    if(!pk) return T(el)+14;
+    return el.offsetTop+pk.offsetTop+pk.offsetHeight/2;
+  }
+
+  function line(x1,y1,x2,y2,color,dash){
+    const p=document.createElementNS('http://www.w3.org/2000/svg','path');
+    const dx=Math.abs(x2-x1), dy=Math.abs(y2-y1);
+    let d;
+    if(dx>50 && dy>50){
+      if(dx>dy){const mx=(x1+x2)/2; d=`M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`}
+      else{const my=(y1+y2)/2; d=`M${x1},${y1} C${x1},${my} ${x2},${my} ${x2},${y2}`}
+    } else if(dy<8){
+      d=`M${x1},${y1} L${x2},${y2}`;
+    } else {
+      const my=(y1+y2)/2;
+      d=`M${x1},${y1} L${x1},${my} L${x2},${my} L${x2},${y2}`;
+    }
+    p.setAttribute('d',d); p.setAttribute('fill','none');
+    p.setAttribute('stroke',color||'#2255aa'); p.setAttribute('stroke-width','1.5');
+    if(dash) p.setAttribute('stroke-dasharray','6 3');
+    svg.appendChild(p);
+  }
+
+  function dot(cx,cy,filled,color){
+    const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx',cx); c.setAttribute('cy',cy); c.setAttribute('r','4');
+    c.setAttribute('fill', filled ? (color||'#2255aa') : '#fff');
+    c.setAttribute('stroke', color||'#2255aa'); c.setAttribute('stroke-width','1.5');
+    svg.appendChild(c);
+  }
+
+  function card(txt,x,y,anchor){
+    const t=document.createElementNS('http://www.w3.org/2000/svg','text');
+    t.setAttribute('x',x); t.setAttribute('y',y);
+    t.setAttribute('text-anchor',anchor||'middle');
+    t.setAttribute('font-size','11'); t.setAttribute('font-family','Arial,sans-serif');
+    t.setAttribute('fill','#1a3a6b'); t.setAttribute('font-weight','700');
+    t.textContent=txt; svg.appendChild(t);
+  }
+
+  function rel(x1,y1,x2,y2,c1,c2,color,dash){
+    line(x1,y1,x2,y2,color,dash);
+    dot(x1,y1, c1==='1', color);
+    dot(x2,y2, c2==='1', color);
+    const off=14;
+    const lx1 = x1+(x2>x1?off:-off), ly1=y1-7;
+    const lx2 = x2+(x2>x1?-off:off), ly2=y2-7;
+    card(c1, lx1, ly1, x2>x1?'start':'end');
+    card(c2, lx2, ly2, x2>x1?'end':'start');
+  }
+
+  const inv=document.getElementById('inv');
+  const lav=document.getElementById('lav');
+  const asig=document.getElementById('asig');
+  const ord=document.getElementById('ord');
+  const prov=document.getElementById('prov');
+  const baja=document.getElementById('baja');
+  const mot=document.getElementById('mot');
+
+  // Lavanderia.prendaId → Inventario.id   (horizontal arriba)
+  rel(
+    R(lav),  fkY(lav,0),
+    L(inv),  pkY(inv),
+    'N','1','#2255aa'
+  );
+
+  // Asignacion.idUnidad → Inventario.id   (L-shape: sube desde asig hasta y de inv, luego va a la derecha)
+  {
+    const x1=MX(asig), y1=T(asig);
+    const x2=L(inv),   y2=pkY(inv)+12;
+    line(x1,y1,x2,y2,'#2255aa');
+    dot(x1,y1,false,'#2255aa');
+    dot(x2,y2,true,'#2255aa');
+    card('N', x1+6, y1-6, 'start');
+    card('1', x2-6, y2-6, 'end');
+  }
+
+  // Orden_Compra.prendaId → Inventario.id  (vertical)
+  rel(
+    MX(ord)+10, T(ord),
+    MX(inv)+10, B(inv),
+    'N','1','#2255aa'
+  );
+
+  // Orden_Compra.proveedorId → Proveedor.id  (horizontal)
+  rel(
+    R(ord),   fkY(ord,1),
+    L(prov),  pkY(prov),
+    'N','1','#2255aa'
+  );
+
+  // Baja_Prenda.prendaId → Inventario.id  (vertical, rojo)
+  rel(
+    MX(baja)-10, T(baja),
+    MX(inv)-10,  B(inv),
+    'N','1','#b22222'
+  );
+
+  // Baja_Prenda.motivoId → Motivo_Descarte.id  (horizontal, rojo)
+  rel(
+    R(baja),  fkY(baja,1),
+    L(mot),   pkY(mot),
+    'N','1','#b22222'
+  );
+});
+</script>
