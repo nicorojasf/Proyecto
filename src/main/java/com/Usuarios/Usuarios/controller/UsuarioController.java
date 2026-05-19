@@ -22,13 +22,13 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
-    // Ruta pública para registrar empleados
+    
     @PostMapping("/registrar")
     public ResponseEntity<Usuario> registrar(@RequestBody Usuario usuario) {
         return ResponseEntity.ok(usuarioService.registrarUsuario(usuario));
     }
 
-    // Ruta pública para verificar credenciales
+    
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody Map<String, String> credenciales) {
         String respuesta = usuarioService.verificarLogin(credenciales.get("username"), credenciales.get("password"));

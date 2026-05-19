@@ -45,7 +45,7 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(HttpSecurity http, PasswordEncoder passwordEncoder) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder
-            .userDetailsService(userDetailsService) // <-- ¡Línea amarrada a tu CustomUserDetailsService con éxito!
+            .userDetailsService(userDetailsService) //
             .passwordEncoder(passwordEncoder);
         return authenticationManagerBuilder.build();
     }

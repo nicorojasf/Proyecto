@@ -21,13 +21,13 @@ public class Usuario {
     private String username;
 
     @Column(nullable = false)
-    private String password; // Se guardará encriptada con BCrypt
+    private String password; 
     
-    @Column(name = "NOMBRE_COMPLETO", nullable = false) // <-- ESTO AGREGARÁ LA COLUMNA FALTANTE
+    @Column(name = "NOMBRE_COMPLETO", nullable = false) 
     private String nombreCompleto;
 
     @Column(nullable = false)
-    private String rol; // Ejemplo: "ROLE_ADMIN"
+    private String rol; 
 
     public Usuario orElseThrow(Object object) {
         // TODO Auto-generated method stub
