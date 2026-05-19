@@ -43,7 +43,7 @@ public class PrendasController {
 
     @PutMapping("/{id}/descontar")
     public ResponseEntity<String> descontar(@PathVariable Integer id, @RequestParam Integer cantidad) {
-    prendasService.descontarStock(id, cantidad); // Este método busca en la tabla PRENDAS y resta
+    prendasService.descontarStock(id, cantidad);
     return ResponseEntity.ok("Stock descontado exitosamente en Inventario");
     }
 

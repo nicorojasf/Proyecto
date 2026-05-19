@@ -35,7 +35,6 @@ public class PrendasService {
     Prendas prenda = prendasRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("No se encontró la prenda con ID: " + id));
 
-    // VALIDACIÓN: Si el stock actual es menor a lo solicitado, lanzamos error
     if (prenda.getStockActual() < cantidad) {
         throw new RuntimeException("Stock insuficiente en Inventario. Disponible: " + prenda.getStockActual());
     }
