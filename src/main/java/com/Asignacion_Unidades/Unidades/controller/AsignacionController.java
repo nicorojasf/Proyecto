@@ -20,7 +20,6 @@ public class AsignacionController {
 
     @Autowired
     private AsignacionService asignacionService;
-    // 2. Obtener todas las asignaciones (GET)
     @GetMapping("/listar")
     public List<AsignacionUnidad> obtenerTodas() {
         return asignacionService.obtenerTodas();

@@ -14,9 +14,8 @@ public class FeignConfig {
     @Bean
 public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http
-        .csrf(csrf -> csrf.disable()) // Desactivamos CSRF
+        .csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> auth
-            // Permitimos que cualquier petición que llegue a este puerto se procese directamente
             .anyRequest().permitAll() 
         );
         

@@ -25,14 +25,12 @@ public class AsignacionService {
     @Autowired
     private LavanderiaClient lavanderiaClient;
 
-    // Listar todas las asignaciones
     public List<AsignacionUnidad> obtenerTodas() {
         return asignacionRepository.findAll();
     }
 
     
     public String chequearEstadoRopa(Integer registroId) {
-        // Obtenemos la información del registro 21, por ejemplo
         LavanderiaDTO registro = lavanderiaClient.consultarEstado(registroId);
         return "El pedido " + registroId + " está en estado: " + registro.getEstadoRopa();
     }
@@ -55,7 +53,6 @@ public class AsignacionService {
 
     
     public LavanderiaDTO enviarRopaSucia(Integer prendaId, Integer cantidad, String area) {
-    // 1. Buscamos la asignación específica por ID y Área
     List<AsignacionUnidad> asignaciones = asignacionRepository.findByIdUnidadAndAreaAsignada(prendaId, area);
     
     if (asignaciones.isEmpty()) {
@@ -64,19 +61,15 @@ public class AsignacionService {
     
     AsignacionUnidad asignacion = asignaciones.get(0);
     
-    // 2. Validamos que el stock sea suficiente
     if (asignacion.getStockUnidad() < cantidad) {
         throw new RuntimeException("Stock insuficiente en " + area + ". Disponible: " + asignacion.getStockUnidad());
     }
     
-    // 3. Restamos el stock y actualizamos el estado
     asignacion.setStockUnidad(asignacion.getStockUnidad() - cantidad);
     asignacion.setEstadoUnidad("EN LAVANDERIA");
     
-    // 4. Guardamos los cambios físicamente en Oracle
     asignacionRepository.save(asignacion);
     
-    // 5. Enviamos la petición al microservicio de Lavandería
     LavanderiaDTO peticion = new LavanderiaDTO();
     peticion.setPrendaId(prendaId);
     peticion.setCantidadEnviada(cantidad);
