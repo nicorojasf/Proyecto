@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.bupa.dto.UsuarioDTO;
 
-@FeignClient(name = "Usuarios", url = "http://localhost:8084/api/usuarios")
+@FeignClient(name = "usuarios-service", url = "http://localhost:8084/api/usuarios")
 public interface UsuarioClient {
     @GetMapping("/buscar/{username}")
     ResponseEntity<UsuarioDTO> obtenerPorUsername(@PathVariable("username") String username);
